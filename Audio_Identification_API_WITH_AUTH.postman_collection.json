@@ -1,0 +1,355 @@
+{
+  "info": {
+    "name": "Audio Identification API - WITH AUTHENTICATION",
+    "description": "Complete audio identification system with user authentication, registration, login, and protected endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. AUTHENTICATION",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"username\": \"testuser\",\n  \"password\": \"Test123456\",\n  \"confirmPassword\": \"Test123456\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "auth", "register"]
+            },
+            "description": "Create a new user account. Returns JWT token."
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"Test123456\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Login with email and password. Returns JWT token valid for 7 days."
+          }
+        },
+        {
+          "name": "Get Profile (Protected)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_TOKEN_HERE"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/auth/profile",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "auth", "profile"]
+            },
+            "description": "Get current user profile. Requires valid JWT token."
+          }
+        },
+        {
+          "name": "Update Profile (Protected)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_TOKEN_HERE"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"newusername\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/profile",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "auth", "profile"]
+            },
+            "description": "Update user profile. Requires valid JWT token."
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_TOKEN_HERE"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/auth/refresh",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "auth", "refresh"]
+            },
+            "description": "Get a new token before current one expires. Requires valid JWT token."
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/auth/logout",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "auth", "logout"]
+            },
+            "description": "Logout (remove token from client storage)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. SYSTEM INFO",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/health",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "health"]
+            },
+            "description": "Check if server is running. Expected: 200 OK"
+          }
+        },
+        {
+          "name": "API Documentation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/docs",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "docs"]
+            },
+            "description": "Get complete API documentation and algorithm details."
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. UPLOAD SONGS",
+      "item": [
+        {
+          "name": "Upload Song (Protected)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_TOKEN_HERE"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "songFile",
+                  "type": "file",
+                  "src": "/path/to/audio.mp3"
+                },
+                {
+                  "key": "title",
+                  "value": "Song Title",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Optional song description",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/songs/upload",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "songs", "upload"]
+            },
+            "description": "Upload audio file and extract features. PROTECTED - Requires JWT token. Expected: 201 Created with processingMetrics showing 50-300ms extraction time."
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. LIST SONGS",
+      "item": [
+        {
+          "name": "List All Songs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/songs",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "songs"]
+            },
+            "description": "Get list of all uploaded songs. PUBLIC endpoint (no auth required)."
+          }
+        },
+        {
+          "name": "Get Song Detail",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/songs/SONG_ID_HERE",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "songs", "SONG_ID_HERE"]
+            },
+            "description": "Get details of a specific song by ID. Replace SONG_ID_HERE with actual ID from list."
+          }
+        },
+        {
+          "name": "Get Statistics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/songs/stats/matching",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "songs", "stats", "matching"]
+            },
+            "description": "Get database statistics and system info. PUBLIC endpoint."
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. AUDIO MATCHING",
+      "item": [
+        {
+          "name": "Match Audio (Protected)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_TOKEN_HERE"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "queryFile",
+                  "type": "file",
+                  "src": "/path/to/query.mp3"
+                },
+                {
+                  "key": "topN",
+                  "value": "5",
+                  "type": "text"
+                },
+                {
+                  "key": "threshold",
+                  "value": "0.3",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/songs/match?topN=5&threshold=0.3",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "songs", "match"],
+              "query": [
+                {
+                  "key": "topN",
+                  "value": "5"
+                },
+                {
+                  "key": "threshold",
+                  "value": "0.3"
+                }
+              ]
+            },
+            "description": "Match query audio against database. PROTECTED - Requires JWT token. Expected: 200 OK with bestMatch, confidence (0-100%), 4 matchingFeatures dimensions, 4 processingStages."
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. DELETE SONG",
+      "item": [
+        {
+          "name": "Delete Song (Protected)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_TOKEN_HERE"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/songs/SONG_ID_HERE",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "songs", "SONG_ID_HERE"]
+            },
+            "description": "Delete a song from database. PROTECTED - Requires JWT token. Returns remainingSongs count decreased by 1."
+          }
+        }
+      ]
+    }
+  ]
+}

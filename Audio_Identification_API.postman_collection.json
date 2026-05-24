@@ -1,0 +1,437 @@
+{
+  "info": {
+    "_postman_id": "audio-identification-system",
+    "name": "🎵 Audio Identification System",
+    "description": "Complete test collection for the Audio Identification Backend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1️⃣ System Health & Documentation",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/health",
+              "host": ["{{base_url}}"],
+              "path": ["api", "health"]
+            },
+            "description": "Check if the backend server is running and healthy"
+          },
+          "response": []
+        },
+        {
+          "name": "API Documentation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/docs",
+              "host": ["{{base_url}}"],
+              "path": ["api", "docs"]
+            },
+            "description": "Get complete API documentation with all endpoints and algorithm details"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2️⃣ Upload Songs (Build Database)",
+      "item": [
+        {
+          "name": "Upload Song #1",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "songFile",
+                  "type": "file",
+                  "src": "path/to/your/song1.mp3",
+                  "disabled": false
+                },
+                {
+                  "key": "title",
+                  "value": "Bohemian Rhapsody",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Queen - 1975",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/songs/upload",
+              "host": ["{{base_url}}"],
+              "path": ["api", "songs", "upload"]
+            },
+            "description": "Upload first reference song to database"
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Song #2",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "songFile",
+                  "type": "file",
+                  "src": "path/to/your/song2.mp3",
+                  "disabled": false
+                },
+                {
+                  "key": "title",
+                  "value": "Another One Bites the Dust",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Queen - 1980",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/songs/upload",
+              "host": ["{{base_url}}"],
+              "path": ["api", "songs", "upload"]
+            },
+            "description": "Upload second reference song to database"
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Song #3",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "songFile",
+                  "type": "file",
+                  "src": "path/to/your/song3.mp3",
+                  "disabled": false
+                },
+                {
+                  "key": "title",
+                  "value": "We Are the Champions",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Queen - 1977",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/songs/upload",
+              "host": ["{{base_url}}"],
+              "path": ["api", "songs", "upload"]
+            },
+            "description": "Upload third reference song to database"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3️⃣ Query Database",
+      "item": [
+        {
+          "name": "List All Songs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/songs",
+              "host": ["{{base_url}}"],
+              "path": ["api", "songs"]
+            },
+            "description": "Get all uploaded songs in the database"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Song by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/songs/550e8400-e29b-41d4-a716-446655440000",
+              "host": ["{{base_url}}"],
+              "path": ["api", "songs", "550e8400-e29b-41d4-a716-446655440000"]
+            },
+            "description": "Get details for specific song (replace ID from List All Songs response)"
+          },
+          "response": []
+        },
+        {
+          "name": "Database Statistics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/songs/stats/matching",
+              "host": ["{{base_url}}"],
+              "path": ["api", "songs", "stats", "matching"]
+            },
+            "description": "Get database statistics and system performance metrics"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4️⃣ Audio Matching (Main Feature)",
+      "item": [
+        {
+          "name": "Match Audio - Default Settings",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "queryFile",
+                  "type": "file",
+                  "src": "path/to/your/query-clip.mp3",
+                  "disabled": false
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/songs/match",
+              "host": ["{{base_url}}"],
+              "path": ["api", "songs", "match"]
+            },
+            "description": "Match audio query with default settings (topN=5, threshold=0.3)"
+          },
+          "response": []
+        },
+        {
+          "name": "Match Audio - Top 10 Results",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "queryFile",
+                  "type": "file",
+                  "src": "path/to/your/query-clip.mp3",
+                  "disabled": false
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/songs/match?topN=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "songs", "match"],
+              "query": [
+                {
+                  "key": "topN",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Match audio query returning top 10 results instead of 5"
+          },
+          "response": []
+        },
+        {
+          "name": "Match Audio - Strict Threshold",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "queryFile",
+                  "type": "file",
+                  "src": "path/to/your/query-clip.mp3",
+                  "disabled": false
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/songs/match?threshold=0.7",
+              "host": ["{{base_url}}"],
+              "path": ["api", "songs", "match"],
+              "query": [
+                {
+                  "key": "threshold",
+                  "value": "0.7"
+                }
+              ]
+            },
+            "description": "Match audio query with strict threshold (70% confidence minimum)"
+          },
+          "response": []
+        },
+        {
+          "name": "Match Audio - Loose Threshold",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "queryFile",
+                  "type": "file",
+                  "src": "path/to/your/query-clip.mp3",
+                  "disabled": false
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/songs/match?threshold=0.1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "songs", "match"],
+              "query": [
+                {
+                  "key": "threshold",
+                  "value": "0.1"
+                }
+              ]
+            },
+            "description": "Match audio query with loose threshold (10% confidence minimum)"
+          },
+          "response": []
+        },
+        {
+          "name": "Match Audio - Custom Parameters",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "queryFile",
+                  "type": "file",
+                  "src": "path/to/your/query-clip.mp3",
+                  "disabled": false
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/songs/match?topN=3&threshold=0.5",
+              "host": ["{{base_url}}"],
+              "path": ["api", "songs", "match"],
+              "query": [
+                {
+                  "key": "topN",
+                  "value": "3"
+                },
+                {
+                  "key": "threshold",
+                  "value": "0.5"
+                }
+              ]
+            },
+            "description": "Match audio query with custom parameters (top 3, 50% threshold)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5️⃣ Data Management",
+      "item": [
+        {
+          "name": "Delete Song",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/songs/550e8400-e29b-41d4-a716-446655440000",
+              "host": ["{{base_url}}"],
+              "path": ["api", "songs", "550e8400-e29b-41d4-a716-446655440000"]
+            },
+            "description": "Delete a song from database (replace ID from List All Songs response)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6️⃣ Rate Limiting Test",
+      "item": [
+        {
+          "name": "Rate Limit - Request 1",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "queryFile",
+                  "type": "file",
+                  "src": "path/to/your/query-clip.mp3"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/songs/match",
+              "host": ["{{base_url}}"],
+              "path": ["api", "songs", "match"]
+            },
+            "description": "First request for rate limit testing"
+          },
+          "response": []
+        },
+        {
+          "name": "Rate Limit - Request 2",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "queryFile",
+                  "type": "file",
+                  "src": "path/to/your/query-clip.mp3"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/songs/match",
+              "host": ["{{base_url}}"],
+              "path": ["api", "songs", "match"]
+            },
+            "description": "Check X-RateLimit-* headers in response"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000",
+      "type": "string"
+    }
+  ]
+}

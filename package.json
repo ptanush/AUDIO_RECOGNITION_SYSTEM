@@ -1,0 +1,14 @@
+{
+  "name": "audio-recognition-system",
+  "version": "1.0.0",
+  "description": "AUDIO RECOGNITION SYSTEM — full-stack audio identification (file-based local storage, no database)",
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail --names \"BACKEND,FRONTEND\" --prefix-colors \"cyan,magenta\" \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend/audio_tracker && npm run dev",
+    "install:all": "cd backend && npm install && cd ../frontend/audio_tracker && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
